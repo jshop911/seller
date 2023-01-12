@@ -50,7 +50,7 @@ export default function BuyerData() {
 								style={({ pressed }) => ({
 									opacity: pressed ? 0.5 : 1,
 								})}
-								// const { itemId, itemName, itemSelectedImage, kg, itemDealPrice, itemUsername, itemAddress, itemProductDesc} = route?.params || {};
+								
 								onPress={() => navigation.navigate("ProductDetail", {itemId: item.id, itemName:item.productName, itemDealPrice:item.dealPrice, itemUsername: item.userName, itemProductDesc: item.productDesc, itemAddress:item.address, kg:item.kg, itemSelectedImage: item.selectedProductImage, })}
 
 							>
