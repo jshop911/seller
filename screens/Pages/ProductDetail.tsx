@@ -1,56 +1,41 @@
-import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, Image, TouchableOpacity, ScrollView, Alert } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Rating, AirbnbRating } from "react-native-ratings";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import tw from "twrnc";
-import { StatusBar } from "expo-status-bar";
+import app from "../../config/firebase/Firebase";
 
-const ProductDetail = ({ route }) => {
-	const { itemId, itemName, kg} = route?.params || {};
-	console.log(JSON.stringify(itemId) + "&" + JSON.stringify(itemName));
+const ProductDetail = ({ route, navigation }) => {
+	const [buyerName, setBuyerName] = useState("");
+	const [dealPrice, setDealPrice] = useState("");
+	const [selectedProductImage, setSelectedProductImage] = useState("");
+	const [productName, setProductName] = useState("");
+	const [productDesc, setProductDesc] = useState("");
 	
+	const { itemId, itemName, itemSelectedImage, kg, itemDealPrice, itemUsername, itemAddress, itemProductDesc} = route?.params || {};
+	console.log(JSON.stringify(itemId) + "&" + JSON.stringify(itemName) + "&" + JSON.stringify(kg)+ "&" + JSON.stringify(itemDealPrice) + "&" + JSON.stringify(itemUsername) + "&" + JSON.stringify(itemAddress) + "&" + JSON.stringify(itemProductDesc));
+
+
+
 	return (
 		<>
 			<ScrollView showsVerticalScrollIndicator={false} style={tw`bg-[#ffffff]`}>
 				<Image
 					style={tw`flex self-center w-full h-70`}
-					source={{
-						uri: "https://thumbs.dreamstime.com/b/random-metal-parts-6380343.jpg",
-					}}
+					source={selectedProductImage ? { uri: itemSelectedImage } : { uri: "https://www.nucleustechnologies.com/blog/wp-content/uploads/2017/01/Cannot-See-Images-in-Outlook-Emails-1200x900.jpg" }}
 				/>
 				<View style={tw`p-4`}>
 					<View style={tw`flex-row pb-2 border-b border-gray-200`}>
-						<Text style={tw`text-3xl text-red-700 font-bold`}>Price Deal: {JSON.stringify(itemName)} </Text>
+						<Text style={tw`text-3xl text-red-700 font-bold`}>Price Deal:</Text>
 						<Text style={tw`text-3xl text-[#faac2a] pl-5 font-bold`}>
-							{JSON.stringify(kg)}
+							Php {itemDealPrice}/kg
 						</Text>
 					</View>
-					<Text style={tw`text-xl text-[#223447] font-bold`}>Random Metal</Text>
-					<Text style={tw`text-sm text-justify`}>
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste quam
-						unde aut laboriosam ea adipisci doloremque. Placeat unde
-						necessitatibus sapiente dignissimos voluptatum similique fuga quasi.
-						Ducimus commodi sapiente id? Molestias! Lorem ipsum dolor sit amet
-						consectetur adipisicing elit. Iste quam unde aut laboriosam ea
-						adipisci doloremque. Placeat unde necessitatibus sapiente
-						dignissimos voluptatum similique fuga quasi. Ducimus commodi
-						sapiente id? Molestias!
-					</Text>
+					<Text style={tw`text-xl text-[#223447] font-bold`}>{itemName}</Text>
+					<Text style={tw`text-sm text-justify`}>{itemProductDesc}</Text>
 				</View>
 
-				<View style={tw`flex-row items-center pl-3 pb-4 text-[#faac2a]`}>
-					<Text style={tw`text-lg text-gray-600 font-bold`}>Ratings: </Text>
-					<AirbnbRating
-						count={5}
-						reviews={["Terrible", "Bad", "Okay", "Good", "Great"]}
-						reviewSize={14}
-						defaultRating={5}
-						background-fill-color="#e5e7eb"
-						fill-color="#faac2a"
-						size={10}
-						showRating={false}
-					/>
-				</View>
+				
 			</ScrollView>
 			<View style={tw`flex-row self-start w-full p-2 bg-gray-100`}>
 				<Image
@@ -61,7 +46,7 @@ const ProductDetail = ({ route }) => {
 				/>
 				<View style={tw`pl-3`}>
 					<Text style={tw`text-lg text-[#223447] font-bold`}>
-						Andres Bonifacio
+						{itemUsername}
 					</Text>
 					<Text style={tw`text-xs text-green-400`}>
 						<MaterialCommunityIcons
@@ -73,21 +58,11 @@ const ProductDetail = ({ route }) => {
 						Verified Buyer
 					</Text>
 				</View>
-				<TouchableOpacity>
-					<View style={tw`flex-row items-center pl-20 py-4`}>
-						<MaterialCommunityIcons
-							name="store"
-							size={35}
-							color="#faac2a"
-							style={tw`pr-2`}
-						/>
-						<Text style={tw`text-sm text-[#223447] font-bold`}>View Shop</Text>
-					</View>
-				</TouchableOpacity>
+				
 			</View>
 
 			<View style={tw`bg-gray-50 flex-row`}>
-				<TouchableOpacity onPress={() => navigation.navigate("MessagePage")}>
+				<TouchableOpacity onPress={() => {route.params.paramKey}}>
 					<View style={tw`flex-row w-52 py-4 pl-2`}>
 						<MaterialCommunityIcons
 							name="phone"
