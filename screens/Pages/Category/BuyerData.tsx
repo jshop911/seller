@@ -1,103 +1,94 @@
-import {
-	View,
-	Text,
-	FlatList,
-	Pressable,
-	Image,
-	ScrollView,
-	TouchableOpacity,
-} from "react-native";
+import { View, Text, Image, TouchableOpacity, ScrollView, Alert } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Rating, AirbnbRating } from "react-native-ratings";
 import React, { useEffect, useState } from "react";
 import tw from "twrnc";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { AirbnbRating } from "react-native-elements";
-import { useNavigation } from "@react-navigation/native";
-import DATA from "../../../assets/api/Data";
-import { db} from "../../../config/firebase/Firebase";
+import app from "../../config/firebase/Firebase";
 
-export default function BuyerData() {
-	const [DATA, setData] = useState();
-	const navigation = useNavigation();
+const ProductDetail = ({ route, navigation }) => {
+	const [buyerName, setBuyerName] = useState("");
+	const [dealPrice, setDealPrice] = useState("");
+	const [selectedProductImage, setSelectedProductImage] = useState("");
+	const [productName, setProductName] = useState("");
+	const [productDesc, setProductDesc] = useState("");
+	
+	const { itemId, itemName, itemSelectedImage, kg, itemDealPrice, itemUsername, itemAddress, itemProductDesc} = route?.params || {};
+	console.log(JSON.stringify(itemId) + "&" + JSON.stringify(itemName) + "&" + JSON.stringify(kg)+ "&" + JSON.stringify(itemDealPrice) + "&" + JSON.stringify(itemUsername) + "&" + JSON.stringify(itemAddress) + "&" + JSON.stringify(itemProductDesc));
 
-	// let currentUserUID = app.auth().currentUser.uid;
-	useEffect(()=>{
-		getDisplayData()
-	}, [])
 
-	const getDisplayData = () => {
-		const getDataFromFirebase = [];
-		const sub = db
-		  .collection("postedItem")
-		  .onSnapshot((querySnapshot) => {
-			querySnapshot.forEach((doc) => {
-			  getDataFromFirebase.push({ ...doc.data(), id: doc.id, key: doc.id });
-			});
-			setData(getDataFromFirebase);
-			// setLoading(false);
-		  });
-	  };
 
 	return (
-		<View style={tw`flex items-center self-center mb-62`}>
-			<FlatList
-				data={DATA}
-				keyExtractor={(item) => item.id}
-				numColumns={2}
-				renderItem={({ item }) => (
-					<View style={tw`flex-row p-2`}>
-						<View style={tw`w-40 bg-gray-200 p-2 rounded shadow-md`}>
-							<Pressable
-								style={({ pressed }) => ({
-									opacity: pressed ? 0.5 : 1,
-								})}
-								// const { itemId, itemName, itemSelectedImage, kg, itemDealPrice, itemUsername, itemAddress, itemProductDesc} = route?.params || {};
-								onPress={() => navigation.navigate("ProductDetail", {itemId: item.id, itemName:item.productName, itemDealPrice:item.dealPrice, itemUsername: item.userName, itemProductDesc: item.productDesc, itemAddress:item.address, kg:item.kg, itemSelectedImage: item.selectedProductImage, })}
-
-							>
-								<Image
-									style={tw`w-36 h-35 rounded px-2 border-solid border-2 border-gray-400`}
-									source={{
-										uri: item.selectedProductImage,
-									}}
-								/>
-							</Pressable>
-							<Text style={tw`text-sm text-gray-700 text-center font-bold`}>
-								{item.productName}
-							</Text>
-							<View style={tw`flex-row items-center`}>
-								<Text style={tw`text-xs text-gray-600 font-bold`}>
-									Deal Price:
-								</Text>
-								<Text style={tw`text-base text-[#faac2a] font-bold ml-5`}>
-									{item.dealPrice} Php
-								</Text>
-							</View>
-
-
-							<View style={tw`flex-row items-center pt-2`}>
-								<MaterialCommunityIcons
-									name="store-marker-outline"
-									size={20}
-									color={"#223447"}
-								/>
-								<Text
-									style={tw`text-xs text-gray-500 font-bold pl-2 w-35 h-12`}
-								>
-									{item.address}
-								</Text>
-							</View>
-
-							<Pressable onPress={() => navigation.navigate("SellNow")}>
-								<View style={tw`p-2 mt-2 bg-[#faac2a] rounded shadow-md`}>
-									<Text style={tw`text-sm text-center text-gray-900 font-bold`}>
-										Sell Now
-									</Text>
-								</View>
-							</Pressable>
-						</View>
+		<>
+			<ScrollView showsVerticalScrollIndicator={false} style={tw`bg-[#ffffff]`}>
+				<Image
+					style={tw`flex self-center w-full h-70`}
+					source={selectedProductImage ? { uri: itemSelectedImage } : { uri: "https://www.nucleustechnologies.com/blog/wp-content/uploads/2017/01/Cannot-See-Images-in-Outlook-Emails-1200x900.jpg" }}
+				/>
+				<View style={tw`p-4`}>
+					<View style={tw`flex-row pb-2 border-b border-gray-200`}>
+						<Text style={tw`text-3xl text-red-700 font-bold`}>Price Deal:</Text>
+						<Text style={tw`text-3xl text-[#faac2a] pl-5 font-bold`}>
+							Php {itemDealPrice}/kg
+						</Text>
 					</View>
-				)}
-			/>
-		</View>
+					<Text style={tw`text-xl text-[#223447] font-bold`}>{itemName}</Text>
+					<Text style={tw`text-sm text-justify`}>{itemProductDesc}</Text>
+				</View>
+
+				
+			</ScrollView>
+			<View style={tw`flex-row self-start w-full p-2 bg-gray-100`}>
+				<Image
+					source={{
+						uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhAi1_6yGhUnU-y3n67_jHqQHlk02DE9MMAdKYj11g0nFWJToV8oN8PQWlgc0W20vQ6Gw&usqp=CAU",
+					}}
+					style={tw`w-10 h-10 rounded-full`}
+				/>
+				<View style={tw`pl-3`}>
+					<Text style={tw`text-lg text-[#223447] font-bold`}>
+						{itemUsername}
+					</Text>
+					<Text style={tw`text-xs text-green-400`}>
+						<MaterialCommunityIcons
+							name="check-decagram"
+							size={16}
+							color="green"
+							style={tw`pr-2`}
+						/>
+						Verified Buyer
+					</Text>
+				</View>
+				
+			</View>
+
+			<View style={tw`bg-gray-50 flex-row`}>
+				<TouchableOpacity onPress={() => {route.params.paramKey}}>
+					<View style={tw`flex-row w-52 py-4 pl-2`}>
+						<MaterialCommunityIcons
+							name="phone"
+							size={24}
+							color="#faac2a"
+							style={tw`pr-2`}
+						/>
+						<Text style={tw`text-base text-[#223447] font-bold`}>
+							Contact Seller
+						</Text>
+					</View>
+				</TouchableOpacity>
+				<TouchableOpacity onPress={() => navigation.navigate("SellNow")}>
+					<View style={tw`flex-row items-end w-52 py-4 pl-4 bg-[#faac2a]`}>
+						<MaterialCommunityIcons
+							name="cart-arrow-up"
+							size={24}
+							color="#fff"
+							style={tw`pr-2`}
+						/>
+						<Text style={tw`text-base text-[#223447] font-bold`}>Sell Now</Text>
+					</View>
+				</TouchableOpacity>
+			</View>
+		</>
 	);
-}
+};
+
+export default ProductDetail;
