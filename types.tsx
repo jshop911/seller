@@ -28,7 +28,7 @@ export type RootStackParamList = {
 	Logout: undefined;
 	Login: undefined;
 	SignUp: undefined;
-	ProductDetail: undefined;
+	ProductDetail: Partial<{itemId: number, itemName: string, kg: number}> | undefined;
 	SellNow: undefined;
 	SellConfirmation: undefined;
 	TransactionHistory: undefined;

@@ -59,6 +59,7 @@ export default function UserStack({
  */
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
+
 function RootNavigator() {
 	return (
 		<Stack.Navigator>
@@ -72,14 +73,6 @@ function RootNavigator() {
 				component={NotFoundScreen}
 				options={{ title: "Oops!" }}
 			/>
-			<Stack.Group
-				screenOptions={{
-					presentation: "modal",
-					headerStyle: {
-						backgroundColor: "#faac2a",
-					},
-				}}
-			>
 				<Stack.Screen
 					name="Search"
 					component={Search}
@@ -125,7 +118,7 @@ function RootNavigator() {
 					component={TransactionHistory}
 					options={{ headerTintColor: "#fff", title: "Transaction History" }}
 				/>
-			</Stack.Group>
+			
 		</Stack.Navigator>
 	);
 }

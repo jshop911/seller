@@ -5,7 +5,10 @@ import React from "react";
 import tw from "twrnc";
 import { StatusBar } from "expo-status-bar";
 
-const ProductDetail = ({ navigation }) => {
+const ProductDetail = ({ route }) => {
+	const { itemId, itemName, kg} = route?.params || {};
+	console.log(JSON.stringify(itemId) + "&" + JSON.stringify(itemName));
+	
 	return (
 		<>
 			<ScrollView showsVerticalScrollIndicator={false} style={tw`bg-[#ffffff]`}>
@@ -17,9 +20,9 @@ const ProductDetail = ({ navigation }) => {
 				/>
 				<View style={tw`p-4`}>
 					<View style={tw`flex-row pb-2 border-b border-gray-200`}>
-						<Text style={tw`text-3xl text-red-700 font-bold`}>Price Deal:</Text>
+						<Text style={tw`text-3xl text-red-700 font-bold`}>Price Deal: {JSON.stringify(itemName)} </Text>
 						<Text style={tw`text-3xl text-[#faac2a] pl-5 font-bold`}>
-							Php 10/kg
+							{JSON.stringify(kg)}
 						</Text>
 					</View>
 					<Text style={tw`text-xl text-[#223447] font-bold`}>Random Metal</Text>

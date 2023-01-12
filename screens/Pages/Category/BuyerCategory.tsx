@@ -43,7 +43,9 @@ export default function BuyerCategory() {
 								style={({ pressed }) => ({
 									opacity: pressed ? 0.5 : 1,
 								})}
-								onPress={() => navigation.navigate("ProductDetail")}
+								onPress={()=> {
+									navigation.navigate("ProductDetail", {itemId: item.id, itemName: item.productName, kg: item.minKg})
+								}}
 							>
 								<Image
 									style={tw`w-25 h-15 rounded px-2 border-solid border-2 border-gray-400`}
@@ -55,6 +57,8 @@ export default function BuyerCategory() {
 							<Text style={tw`text-xs text-gray-700 text-center font-bold`}>
 								{item.listOfCategory}
 							</Text>
+							
+
 						</View>
 					</View>
 				)}
