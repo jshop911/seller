@@ -13,7 +13,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { AirbnbRating } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
 import DATA from "../../../assets/api/Data";
-import { db, app } from "../../../config/firebase/Firebase";
+import { db} from "../../../config/firebase/Firebase";
 
 export default function BuyerData() {
 	const [DATA, setData] = useState();
@@ -38,7 +38,7 @@ export default function BuyerData() {
 	  };
 
 	return (
-		<View style={tw`flex items-center self-center pb-24`}>
+		<View style={tw`flex items-center self-center mb-62`}>
 			<FlatList
 				data={DATA}
 				keyExtractor={(item) => item.id}
@@ -50,7 +50,9 @@ export default function BuyerData() {
 								style={({ pressed }) => ({
 									opacity: pressed ? 0.5 : 1,
 								})}
-								onPress={() => navigation.navigate("ProductDetail")}
+								// const { itemId, itemName, itemSelectedImage, kg, itemDealPrice, itemUsername, itemAddress, itemProductDesc} = route?.params || {};
+								onPress={() => navigation.navigate("ProductDetail", {itemId: item.id, itemName:item.productName, itemDealPrice:item.dealPrice, itemUsername: item.userName, itemProductDesc: item.productDesc, itemAddress:item.address, kg:item.kg, itemSelectedImage: item.selectedProductImage, })}
+
 							>
 								<Image
 									style={tw`w-36 h-35 rounded px-2 border-solid border-2 border-gray-400`}
@@ -71,21 +73,6 @@ export default function BuyerData() {
 								</Text>
 							</View>
 
-							<View style={tw`flex-row text-justify`}>
-								<Text style={tw`text-xs text-gray-600 font-bold`}>
-									Ratings:{" "}
-								</Text>
-								<AirbnbRating
-									count={item.rating}
-									reviews={["Terrible", "Bad", "Okay", "Good", "Great"]}
-									reviewSize={14}
-									defaultRating={item.rating}
-									background-fill-color="#e5e7eb"
-									fill-color="#faac2a"
-									size={10}
-									showRating={false}
-								/>
-							</View>
 
 							<View style={tw`flex-row items-center pt-2`}>
 								<MaterialCommunityIcons
@@ -96,7 +83,7 @@ export default function BuyerData() {
 								<Text
 									style={tw`text-xs text-gray-500 font-bold pl-2 w-35 h-12`}
 								>
-									{item.location}
+									{item.address}
 								</Text>
 							</View>
 
