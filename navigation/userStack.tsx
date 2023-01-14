@@ -66,57 +66,114 @@ function RootNavigator() {
 			<Stack.Screen
 				name="Root"
 				component={BottomTabNavigator}
-				options={{ headerShown: false }}
+				options={{ 
+					headerShown: false,
+					headerStyle: {
+						backgroundColor: "#faac2a",
+					},
+				}}
 			/>
 			<Stack.Screen
 				name="NotFound"
 				component={NotFoundScreen}
-				options={{ title: "Oops!" }}
+				options={{ 
+					title: "Oops!",
+					headerStyle: {
+						backgroundColor: "#faac2a",
+					},
+				}}
+				
 			/>
 				<Stack.Screen
 					name="Search"
 					component={Search}
-					options={{ headerTintColor: "#fff" }}
+					options={{ 
+						title: "Oops!",
+						headerStyle: {
+							backgroundColor: "#faac2a",
+						},
+					}}
 				/>
 				<Stack.Screen
 					name="About"
 					component={About}
-					options={{ headerTintColor: "#fff" }}
+					options={{ 
+					title: "About",
+					headerStyle: {
+						backgroundColor: "#faac2a",
+					},
+				}}
 				/>
 				<Stack.Screen
 					name="EditProfile"
 					component={EditProfile}
-					options={{ headerTintColor: "#fff" }}
+					options={{ 
+					title: "Edit Profile",
+					headerStyle: {
+						backgroundColor: "#faac2a",
+					},
+				}}
 				/>
 				<Stack.Screen
 					name="ListCategory"
 					component={ListCategory}
-					options={{ headerTintColor: "#fff" }}
+					options={{ 
+						title: "List of Categories",
+						headerStyle: {
+							backgroundColor: "#faac2a",
+						},
+					}}
 				/>
 				<Stack.Screen
 					name="SellNow"
 					component={SellNow}
-					options={{ headerTintColor: "#fff" }}
+					options={{ 
+						title: "Sell Now",
+						headerStyle: {
+							backgroundColor: "#faac2a",
+						},
+					}}
 				/>
 				<Stack.Screen
 					name="SellConfirmation"
 					component={SellConfirmation}
-					options={{ headerTintColor: "#fff", headerShown: false }}
+					options={{ 
+						headerShown: false,
+						title: "Sell Confirmation",
+						headerStyle: {
+							backgroundColor: "#faac2a",
+						},
+					}}
 				/>
 				<Stack.Screen
 					name="MessagePage"
 					component={MessagePage}
-					options={{ headerTintColor: "#fff" }}
+					options={{ 
+						title: "Message Page",
+						headerStyle: {
+							backgroundColor: "#faac2a",
+						},
+					}}
 				/>
 				<Stack.Screen
 					name="ProductDetail"
 					component={ProductDetail}
-					options={{ headerTintColor: "#fff" }}
+					options={{ 
+						title: "Product Detail",
+						headerStyle: {
+							backgroundColor: "#faac2a",
+						},
+					}}
 				/>
 				<Stack.Screen
 					name="TransactionHistory"
 					component={TransactionHistory}
-					options={{ headerTintColor: "#fff", title: "Transaction History" }}
+					options={{ 
+						title: "Transaction History",
+						headerStyle: {
+							backgroundColor: "#faac2a",
+						},
+					}}
 				/>
 			
 		</Stack.Navigator>
@@ -187,21 +244,7 @@ function BottomTabNavigator({ navigation }) {
 				options={{
 					title: "Notification",
 					tabBarIcon: ({ color }) => <TabBarIcon name="bell" color={color} />,
-					headerRight: () => (
-						<Pressable
-							onPress={() => navigation.navigate("Search")}
-							style={({ pressed }) => ({
-								opacity: pressed ? 0.5 : 1,
-							})}
-						>
-							<FontAwesome
-								name="search"
-								size={25}
-								color={Colors[colorScheme].text}
-								style={{ marginRight: 15 }}
-							/>
-						</Pressable>
-					),
+
 				}}
 			/>
 			<BottomTab.Screen

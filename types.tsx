@@ -24,7 +24,18 @@ export type RootStackParamList = {
   EditProfile: undefined;
   Profile: undefined;
   MessagePage: undefined;
-  ListCategory: undefined;
+  ListCategory: | Partial<{
+    itemId: number;
+    itemName: string;
+    listOfCategory: string;
+    itemSelectedImage: string;
+    minKg: number;
+    itemDealPrice: number;
+    itemUsername: string;
+    itemAddress: string;
+    itemProductDesc: string;
+  }>
+| undefined;
   Logout: undefined;
   Login: undefined;
   SignUp: undefined;
@@ -35,7 +46,7 @@ export type RootStackParamList = {
         listOfCategory: string;
         itemSelectedImage: string;
         minKg: number;
-        itemDealPrice: string;
+        itemDealPrice: number;
         itemUsername: string;
         itemAddress: string;
         itemProductDesc: string;
@@ -48,13 +59,29 @@ export type RootStackParamList = {
         listOfCategory: string;
         itemSelectedImage: string;
         minKg: number;
-        itemDealPrice: string;
+        itemDealPrice: number;
         itemUsername: string;
         itemAddress: string;
         itemProductDesc: string;
+        itemDateSell: string;
+        itemStatus: string;
       }>
     | undefined;
-  SellConfirmation: undefined;
+  SellConfirmation: | Partial<{
+    itemId: number;
+    itemName: string;
+    listOfCategory: string;
+    itemSelectedImage: string;
+    minKg: number;
+    itemDealPrice: number;
+    itemUsername: string;
+    itemAddress: string;
+    itemProductDesc: string;
+    itemDateSell: string;
+    itemSellDate: string;
+    itemStatus: string;
+  }>
+| undefined;
   TransactionHistory: undefined;
   ForgotPassword: undefined;
 };

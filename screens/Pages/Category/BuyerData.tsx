@@ -10,9 +10,7 @@ import {
 import React, { useEffect, useState } from "react";
 import tw from "twrnc";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { AirbnbRating } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
-import DATA from "../../../assets/api/Data";
 import { db } from "../../../config/firebase/Firebase";
 
 export default function BuyerData() {
@@ -36,7 +34,7 @@ export default function BuyerData() {
   };
 
   return (
-    <View style={tw`flex items-center self-center mb-62`}>
+    <View style={tw`flex items-center self-center h-80 mb-120`}>
       <FlatList
         data={DATA}
         keyExtractor={(item) => item.id}
@@ -94,7 +92,19 @@ export default function BuyerData() {
                 </Text>
               </View>
 
-              <Pressable onPress={() => navigation.navigate("SellNow")}>
+              <Pressable onPress={() =>
+                navigation.navigate("SellNow", {
+                  itemId: item.id,
+                  itemName: item.productName,
+                  itemDealPrice: item.dealPrice,
+                  itemUsername: item.userName,
+                  itemProductDesc: item.productDesc,
+                  itemAddress: item.address,
+                  minKg: item.minKg,
+                  itemSelectedImage: item.selectedProductImage,
+                  listOfCategory: item.listOfCategory,
+                })
+              }>
                 <View style={tw`p-2 mt-2 bg-[#faac2a] rounded shadow-md`}>
                   <Text style={tw`text-sm text-center text-gray-900 font-bold`}>
                     Sell Now
