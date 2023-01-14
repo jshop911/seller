@@ -23,7 +23,7 @@ export default function Notification({ navigation }) {
   
 	const getDisplayData = () => {
 	  const getDataFromFirebase = [];
-	  const sub = db.collection("placeSell").onSnapshot((querySnapshot) => {
+	  const sub = db.collection("buyerAgree").onSnapshot((querySnapshot) => {
 		querySnapshot.forEach((doc) => {
 		  getDataFromFirebase.push({ ...doc.data(), id: doc.id, key: doc.id });
 		});
@@ -57,12 +57,12 @@ export default function Notification({ navigation }) {
 								<Text style={tw`text-base font-bold`}>{item.productName}</Text>
 							</View>
 							<View>
-								<Text style={tw`text-xs text-gray-600`}>{item.sellDate.toDate().toDateString()}</Text>
+								<Text style={tw`text-xs text-gray-600`}>{item.dateSell.toDate().toDateString()}</Text>
 							</View>
 						</View>
 						{/* For sellers name and time end */}
 
-						<View style={tw`pb-2`}>
+						<View style={tw`pb-2`}> 
 							<Text style={tw`text-sm w-60`}>
 								<Text style={tw`font-bold`}>{item.buyerName},</Text> the buyer,
 								confirmed. Please allow{" "}
