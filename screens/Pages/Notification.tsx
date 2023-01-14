@@ -35,7 +35,7 @@ export default function Notification({ navigation }) {
 	return (
 		<FlatList
 			data={SellStatus}
-			keyExtractor={(item) => item.itemId}
+			keyExtractor={(item) => item.id}
 			renderItem={({ item }) => (
 				<View
 					style={tw`flex flex-row border-b border-gray-300 bg-gray-200 rounded mb-2`}

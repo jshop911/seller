@@ -12,7 +12,7 @@ import * as Location from "expo-location";
 import React, { useEffect, useState } from "react";
 import tw from "twrnc";
 import app, { db } from "../../config/firebase/Firebase";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { addDoc, collection, doc, serverTimestamp } from "firebase/firestore";
 
 export default function SellNow({ route, navigation }) {
   const [estimatedKg, setEstimatedKg] = useState();
@@ -75,6 +75,7 @@ export default function SellNow({ route, navigation }) {
       alert("Sorry, but the minimum kg to be sold is 5.");
     } else {
       const docRef = await addDoc(collection(db, "placeSell"), {
+        key: doc.app.id,
         productName: itemName,
         buyerName: itemUsername,
         itemId: itemId,
@@ -91,8 +92,8 @@ export default function SellNow({ route, navigation }) {
         statusMsg: "Waiting for buyers confirmation",
       });
       console.log(docRef);
-      alert("Thank you. Please wait for buyers confirmation.");
-      navigation.navigate("SellConfirmation")
+      Alert.alert("Thank you. Please wait for buyer's confirmation.");
+      navigation.navigate("Home")
     }
   };
 

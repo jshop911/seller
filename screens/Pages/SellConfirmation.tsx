@@ -59,14 +59,13 @@ export default function SellConfirmation({ route, navigation }) {
 				</View>
 			</View>
 				{/* Items to be sold */}
-				<View style={tw`mt-2`}>
 					<FlatList
 						data={SellStatus}
-						keyExtractor={(item) => item.itemId}
+						keyExtractor={(item) => item.id}
 						renderItem={({ item }) => (
 							<>
-							<ScrollView style={tw`p-2`}>
-								<View style={tw`my-2 bg-gray-200 rounded flex-row`}>
+							<ScrollView style={tw`pb-2`}>
+								<View style={tw`bg-gray-200 rounded flex-row`}>
 									<View style={tw`p-2`}>
 										<Image
 										source={
@@ -124,7 +123,6 @@ export default function SellConfirmation({ route, navigation }) {
 							</>
 						)}
 					/>
-				</View>
 		
 		</>
 	);

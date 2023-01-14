@@ -88,7 +88,7 @@ function RootNavigator() {
 					name="Search"
 					component={Search}
 					options={{ 
-						title: "Oops!",
+						title: "Search",
 						headerStyle: {
 							backgroundColor: "#faac2a",
 						},
@@ -149,7 +149,7 @@ function RootNavigator() {
 					name="MessagePage"
 					component={MessagePage}
 					options={{ 
-						title: "Message Page",
+						title: "",
 						headerStyle: {
 							backgroundColor: "#faac2a",
 						},
@@ -244,7 +244,7 @@ function BottomTabNavigator({ navigation }) {
 				options={{
 					title: "Notification",
 					tabBarIcon: ({ color }) => <TabBarIcon name="bell" color={color} />,
-
+					
 				}}
 			/>
 			<BottomTab.Screen

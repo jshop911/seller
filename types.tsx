@@ -23,7 +23,14 @@ export type RootStackParamList = {
   Search: undefined;
   EditProfile: undefined;
   Profile: undefined;
-  MessagePage: undefined;
+  MessagePage: | Partial<{
+    chatId: number;
+    chatUsername: string;
+    chatDate: string;
+    chatText: string;
+    chatAvatar: string;
+  }>
+| undefined;
   ListCategory: | Partial<{
     itemId: number;
     itemName: string;
@@ -64,7 +71,7 @@ export type RootStackParamList = {
         itemAddress: string;
         itemProductDesc: string;
         itemDateSell: string;
-        itemStatus: string;
+            itemStatus: string;
       }>
     | undefined;
   SellConfirmation: | Partial<{
@@ -91,7 +98,14 @@ export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
 
 export type RootTabParamList = {
   Home: undefined;
-  MessageList: undefined;
+  MessageList:| Partial<{
+    chatId: number;
+    chatUsername: string;
+    chatDate: string;
+    chatText: string;
+    chatAvatar: string;
+  }>
+| undefined;
   Notification: undefined;
   Profile: undefined;
 };

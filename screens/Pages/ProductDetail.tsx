@@ -76,9 +76,12 @@ const ProductDetail = ({ route, navigation }) => {
       </View>
 
       <View style={tw`bg-gray-50 flex-row`}>
-        <TouchableOpacity
-          
-        >
+      <TouchableOpacity
+         onPress={() => navigation.navigate("MessagePage", {
+          itemUsername: itemUsername,
+         })}
+
+          >
           <View style={tw`flex-row w-52 py-4 pl-2`}>
             <MaterialCommunityIcons
               name="phone"

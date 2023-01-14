@@ -34,7 +34,7 @@ export default function BuyerData() {
   };
 
   return (
-    <View style={tw`flex items-center self-center h-80 mb-120`}>
+    <View style={tw`flex items-center self-center h-95 mb-120`}>
       <FlatList
         data={DATA}
         keyExtractor={(item) => item.id}
@@ -57,6 +57,7 @@ export default function BuyerData() {
                     minKg: item.minKg,
                     itemSelectedImage: item.selectedProductImage,
                     listOfCategory: item.listOfCategory,
+                    
                   })
                 }
               >
