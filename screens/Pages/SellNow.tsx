@@ -31,7 +31,7 @@ export default function SellNow({ route, navigation }) {
     listOfCategory,
   } = route?.params || {};
 
-  let currentUserUID = app.auth().currentUser.uid;
+  let currentUserUID = app.auth().currentUser?.uid;
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
 
@@ -48,11 +48,11 @@ export default function SellNow({ route, navigation }) {
           Alert.alert("No user data found!");
         } else {
           let dataObj = doc.data();
-          setFirstName(dataObj.firstName);
-          setLastName(dataObj.lastName);
+          setFirstName(dataObj?.firstName);
+          setLastName(dataObj?.lastName);
         }
-      } catch (err) {
-        Alert.alert("There is an error.", err.message);
+      } catch (e) {
+        Alert.alert("There is an error.", e.message);
       }
     }
     getUserInfo();
