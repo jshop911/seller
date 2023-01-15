@@ -23,8 +23,26 @@ export type RootStackParamList = {
   Search: undefined;
   EditProfile: undefined;
   Profile: undefined;
-  MessagePage: undefined;
-  ListCategory: undefined;
+  MessagePage: | Partial<{
+    chatId: number;
+    chatUsername: string;
+    chatDate: string;
+    chatText: string;
+    chatAvatar: string;
+  }>
+| undefined;
+  ListCategory: | Partial<{
+    itemId: number;
+    itemName: string;
+    listOfCategory: string;
+    itemSelectedImage: string;
+    minKg: number;
+    itemDealPrice: number;
+    itemUsername: string;
+    itemAddress: string;
+    itemProductDesc: string;
+  }>
+| undefined;
   Logout: undefined;
   Login: undefined;
   SignUp: undefined;
@@ -35,7 +53,7 @@ export type RootStackParamList = {
         listOfCategory: string;
         itemSelectedImage: string;
         minKg: number;
-        itemDealPrice: string;
+        itemDealPrice: number;
         itemUsername: string;
         itemAddress: string;
         itemProductDesc: string;
@@ -48,13 +66,29 @@ export type RootStackParamList = {
         listOfCategory: string;
         itemSelectedImage: string;
         minKg: number;
-        itemDealPrice: string;
+        itemDealPrice: number;
         itemUsername: string;
         itemAddress: string;
         itemProductDesc: string;
+        itemDateSell: string;
+            itemStatus: string;
       }>
     | undefined;
-  SellConfirmation: undefined;
+  SellConfirmation: | Partial<{
+    itemId: number;
+    itemName: string;
+    listOfCategory: string;
+    itemSelectedImage: string;
+    minKg: number;
+    itemDealPrice: number;
+    itemUsername: string;
+    itemAddress: string;
+    itemProductDesc: string;
+    itemDateSell: string;
+    itemSellDate: string;
+    itemStatus: string;
+  }>
+| undefined;
   TransactionHistory: undefined;
   ForgotPassword: undefined;
 };
@@ -64,7 +98,14 @@ export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
 
 export type RootTabParamList = {
   Home: undefined;
-  MessageList: undefined;
+  MessageList:| Partial<{
+    chatId: number;
+    chatUsername: string;
+    chatDate: string;
+    chatText: string;
+    chatAvatar: string;
+  }>
+| undefined;
   Notification: undefined;
   Profile: undefined;
 };

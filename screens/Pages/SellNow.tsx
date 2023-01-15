@@ -11,7 +11,8 @@ import {
 import * as Location from "expo-location";
 import React, { useEffect, useState } from "react";
 import tw from "twrnc";
-import app from "../../config/firebase/Firebase";
+import app, { db } from "../../config/firebase/Firebase";
+import { addDoc, collection, doc, serverTimestamp } from "firebase/firestore";
 
 export default function SellNow({ route, navigation }) {
   const [estimatedKg, setEstimatedKg] = useState();
@@ -29,9 +30,16 @@ export default function SellNow({ route, navigation }) {
     itemAddress,
     itemProductDesc,
     listOfCategory,
+    itemStatus,
   } = route?.params || {};
 
+<<<<<<< HEAD
   let currentUserUID = app.auth().currentUser?.uid;
+=======
+  // console.log(itemName)
+
+  let currentUserUID = app.auth().currentUser.uid;
+>>>>>>> 23a104796e236cb7dec663963323a466fb0a1316
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
 
@@ -70,8 +78,26 @@ export default function SellNow({ route, navigation }) {
     ) {
       alert("Sorry, but the minimum kg to be sold is 5.");
     } else {
-      alert("Thank you. Please wait for buyers confirmation.");
-      navigation.navigate("SellConfirmation");
+      const docRef = await addDoc(collection(db, "placeSell"), {
+        key: doc.app.id,
+        productName: itemName,
+        buyerName: itemUsername,
+        itemId: itemId,
+        minKg: minKg,
+        itemDealPrice: itemDealPrice,
+        sellerUserID: currentUserUID,
+        itemSelectedImage: itemSelectedImage,
+        sellDate: new Date(),
+        sellerFirstName: firstName,
+        sellerLastName: lastName,
+        sellerAddress: displayCurrentAddress,
+        buyerAddress: itemAddress,
+        dateSell: serverTimestamp(),
+        statusMsg: "Waiting for buyers confirmation",
+      });
+      console.log(docRef);
+      Alert.alert("Thank you. Please wait for buyer's confirmation.");
+      navigation.navigate("Home")
     }
   };
 
@@ -135,37 +161,40 @@ export default function SellNow({ route, navigation }) {
         </View>
 
         {/* Items to be sold */}
-        <ScrollView showsVerticalScrollIndicator={false} style={tw`h-80 mb-12`}>
-          <View style={tw`mt-3`}>
+          <View style={tw`mt-3 h-76`}>
             <View style={tw`bg-gray-200 rounded flex-row`}>
               <View style={tw`p-2`}>
                 <Image
-                  source={{
-                    uri: itemSelectedImage,
-                  }}
+                source={
+                  itemSelectedImage
+                    ? { uri: itemSelectedImage }
+                    : {
+                        uri: "https://www.nucleustechnologies.com/blog/wp-content/uploads/2017/01/Cannot-See-Images-in-Outlook-Emails-1200x900.jpg",
+                      }
+                }
                   style={tw`w-25 h-30 p-2 rounded`}
                 />
               </View>
               <View style={tw`pt-2 w-54`}>
                 <Text style={tw`text-lg font-bold`}>
-                  {JSON.stringify(itemName)}
+                  {itemName}
                 </Text>
                 <Text style={tw`text-[#223447] font-bold underline`}>
-                  JShop
+                {itemUsername}
                 </Text>
                 <View style={tw`flex-row items-center`}>
                   <Text style={tw`text-xs text-gray-600 font-bold`}>
                     Deal Price:
                   </Text>
                   <Text style={tw`text-base text-red-500 font-bold pl-2`}>
-                    10 Php / kg
+                    {itemDealPrice} Php / kg
                   </Text>
                 </View>
                 <View style={tw`flex-row items-center`}>
                   <Text style={tw`text-xs text-gray-600 font-bold`}>
                     Maximum kg to sell:
                   </Text>
-                  <Text style={tw`text-sm text-gray-600 font-bold`}> 5 kg</Text>
+                  <Text style={tw`text-sm text-gray-600 font-bold`}> {minKg} kg</Text>
                 </View>
                 <View style={tw`flex-row items-center`}>
                   <Text style={tw`text-xs text-gray-600 font-bold`}>
@@ -185,15 +214,13 @@ export default function SellNow({ route, navigation }) {
               </View>
             </View>
           </View>
-        </ScrollView>
-      </View>
-
-      {/* Sell now button */}
+        {/* Sell now button */}
       <TouchableOpacity onPress={sellNow}>
         <View style={tw`m-2 bg-[#faac2a] rounded`}>
           <Text style={tw`text-center p-3 font-bold`}>Sell now</Text>
         </View>
       </TouchableOpacity>
+      </View>
     </>
   );
 }

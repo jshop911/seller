@@ -3,7 +3,10 @@ import React, { useEffect, useState } from "react";
 import tw from "twrnc";
 import { useNavigation } from "@react-navigation/native";
 
-import { db, app } from "../../../config/firebase/Firebase";
+import { db} from "../../../config/firebase/Firebase";
+
+
+
 export default function BuyerCategory() {
   const navigation = useNavigation();
   const [CATEGORY, setCategory] = useState();
@@ -19,7 +22,6 @@ export default function BuyerCategory() {
         getDataFromFirebase.push({ ...doc.data(), id: doc.id, key: doc.id });
       });
       setCategory(getDataFromFirebase);
-      // setLoading(false);
     });
   };
   return (
@@ -41,9 +43,19 @@ export default function BuyerCategory() {
                 style={({ pressed }) => ({
                   opacity: pressed ? 0.5 : 1,
                 })}
-                onPress={() => {
-                  navigation.navigate("ProductDetail");
-                }}
+                onPress={() =>
+                  navigation.navigate("ProductDetail", {
+                    itemId: item.id,
+                    itemName: item.productName,
+                    itemDealPrice: item.dealPrice,
+                    itemUsername: item.userName,
+                    itemProductDesc: item.productDesc,
+                    itemAddress: item.address,
+                    minKg: item.minKg,
+                    itemSelectedImage: item.selectedProductImage,
+                    listOfCategory: item.listOfCategory,
+                  })
+                }
               >
                 <Image
                   style={tw`w-25 h-15 rounded px-2 border-solid border-2 border-gray-400`}

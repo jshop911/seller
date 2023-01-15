@@ -1,3 +1,4 @@
+
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import {
 	View,
@@ -7,11 +8,30 @@ import {
 	FlatList,
 	TouchableOpacity,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import tw from "twrnc";
 import SellStatus from "../../assets/api/SellStatus";
+import { db } from "../../config/firebase/Firebase";
 
-export default function SellConfirmation({ navigation }) {
+export default function SellConfirmation({ route, navigation }) {
+
+	  const [SellStatus, setSellStatus] = useState();
+
+	  useEffect(() => {
+		getDisplayData();
+	  }, []);
+	
+	  const getDisplayData = () => {
+		const getDataFromFirebase = [];
+		const sub = db.collection("placeSell").onSnapshot((querySnapshot) => {
+		  querySnapshot.forEach((doc) => {
+			getDataFromFirebase.push({ ...doc.data(), id: doc.id, key: doc.id });
+		  });
+		  setSellStatus(getDataFromFirebase);
+		});
+	  };
+	
+
 	return (
 		<>
 			<View
@@ -39,35 +59,37 @@ export default function SellConfirmation({ navigation }) {
 					</TouchableOpacity>
 				</View>
 			</View>
-
-			<View style={tw`p-2`}>
 				{/* Items to be sold */}
-				<View style={tw`mt-2`}>
 					<FlatList
 						data={SellStatus}
 						keyExtractor={(item) => item.id}
 						renderItem={({ item }) => (
 							<>
-								<View style={tw`my-2 bg-gray-200 rounded flex-row`}>
+							<ScrollView style={tw`pb-2`}>
+								<View style={tw`bg-gray-200 rounded flex-row`}>
 									<View style={tw`p-2`}>
 										<Image
-											source={{
-												uri: item.productImage,
-											}}
+										source={
+											item.itemSelectedImage
+											  ? { uri: item.itemSelectedImage }
+											  : {
+												  uri: "https://www.nucleustechnologies.com/blog/wp-content/uploads/2017/01/Cannot-See-Images-in-Outlook-Emails-1200x900.jpg",
+												}
+										  }
 											style={tw`w-20 h-30 p-2 rounded`}
 										/>
 									</View>
 									<View style={tw`pt-2 w-35 border-r border-gray-300`}>
-										<Text style={tw`text-base font-bold`}>{item.product}</Text>
+										<Text style={tw`text-base font-bold`}>{item.productName}</Text>
 										<Text style={tw`text-[#223447] font-bold underline`}>
-											{item.username}
+											{item.buyerName}
 										</Text>
 										<View style={tw`flex-row items-center`}>
 											<Text style={tw`text-xs text-gray-600 font-bold`}>
 												Deal Price:
 											</Text>
 											<Text style={tw`text-gray-600 font-bold`}>
-												{item.price} Php / kg
+												{item.minKg} Php / kg
 											</Text>
 										</View>
 										<View style={tw`flex-row items-center`}>
@@ -76,7 +98,7 @@ export default function SellConfirmation({ navigation }) {
 											</Text>
 											<Text style={tw`text-sm text-gray-600 font-bold`}>
 												{" "}
-												{item.sold} kg
+												{item.itemDealPrice} kg
 											</Text>
 										</View>
 										<View style={tw`flex-row items-center`}>
@@ -85,7 +107,7 @@ export default function SellConfirmation({ navigation }) {
 											</Text>
 											<Text style={tw`text-sm text-red-500 font-bold`}>
 												{" "}
-												{item.sold * item.price} kg
+												{item.minKg * item.itemDealPrice} kg
 											</Text>
 										</View>
 									</View>
@@ -93,16 +115,16 @@ export default function SellConfirmation({ navigation }) {
 									<View style={tw`self-center p-2 w-25`}>
 										<Text style={tw`font-bold`}>Status:</Text>
 										<Text style={tw`text-sm text-green-500`}>
-											{item.status}
+											{item.statusMsg}
 										</Text>
-										<Text style={tw`text-xs`}>{item.date}</Text>
+										<Text style={tw`text-xs`}>{item.sellDate.toDate().toDateString()}</Text>
 									</View>
 								</View>
+							</ScrollView>
 							</>
 						)}
 					/>
-				</View>
-			</View>
+		
 		</>
 	);
 }

@@ -10,14 +10,8 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Rating, AirbnbRating } from "react-native-ratings";
 import React, { useEffect, useState } from "react";
 import tw from "twrnc";
-import app from "../../config/firebase/Firebase";
 
 const ProductDetail = ({ route, navigation }) => {
-  const [buyerName, setBuyerName] = useState("");
-  const [dealPrice, setDealPrice] = useState("");
-  const [selectedProductImage, setSelectedProductImage] = useState("");
-  const [productName, setProductName] = useState("");
-  const [productDesc, setProductDesc] = useState("");
 
   const {
     itemId,
@@ -31,7 +25,7 @@ const ProductDetail = ({ route, navigation }) => {
     listOfCategory,
   } = route?.params || {};
 
-  console.log(JSON.stringify(minKg));
+  // console.log(JSON.stringify(minKg));
 
   return (
     <>
@@ -39,7 +33,7 @@ const ProductDetail = ({ route, navigation }) => {
         <Image
           style={tw`flex self-center w-full h-70`}
           source={
-            selectedProductImage
+            itemSelectedImage
               ? { uri: itemSelectedImage }
               : {
                   uri: "https://www.nucleustechnologies.com/blog/wp-content/uploads/2017/01/Cannot-See-Images-in-Outlook-Emails-1200x900.jpg",
@@ -54,6 +48,7 @@ const ProductDetail = ({ route, navigation }) => {
             </Text>
           </View>
           <Text style={tw`text-xl text-[#223447] font-bold`}>{itemName}</Text>
+          <Text style={tw`text-sm text-justify pb-2`}>{itemAddress}</Text>
           <Text style={tw`text-sm text-justify`}>{itemProductDesc}</Text>
         </View>
       </ScrollView>
@@ -81,11 +76,12 @@ const ProductDetail = ({ route, navigation }) => {
       </View>
 
       <View style={tw`bg-gray-50 flex-row`}>
-        <TouchableOpacity
-          onPress={() => {
-            route.params.paramKey;
-          }}
-        >
+      <TouchableOpacity
+         onPress={() => navigation.navigate("MessagePage", {
+          itemUsername: itemUsername,
+         })}
+
+          >
           <View style={tw`flex-row w-52 py-4 pl-2`}>
             <MaterialCommunityIcons
               name="phone"
@@ -103,12 +99,12 @@ const ProductDetail = ({ route, navigation }) => {
             navigation.navigate("SellNow", {
               itemId: itemId,
               itemName: itemName,
-              itemDealPrice: dealPrice,
+              itemDealPrice: itemDealPrice,
               itemUsername: itemUsername,
-              itemProductDesc: productDesc,
+              itemProductDesc: itemProductDesc,
               itemAddress: itemAddress,
               minKg: minKg,
-              itemSelectedImage: selectedProductImage,
+              itemSelectedImage: itemSelectedImage,
               listOfCategory: listOfCategory,
             })
           }

@@ -84,16 +84,12 @@ export default function Home({ navigation }: RootTabScreenProps<"Home">) {
 							color="green"
 							style={tw`pr-2`}
 						/>
-						<Badge
-							value="99+"
-							status="error"
-							containerStyle={{ position: "absolute", top: -4, right: 2 }}
-						/>
+						
 					</Pressable>
 				</View>
 			</View>
 
-			<BuyerCategory navigation={undefined} />
+			<BuyerCategory />
 			<View style={tw`mt-2 py-1 bg-[#faac2a] w-full`}>
 				<Text
 					style={tw`text-xl text-center text-[#223447] italic font-semibold`}
@@ -101,7 +97,7 @@ export default function Home({ navigation }: RootTabScreenProps<"Home">) {
 					"Never refuse to reuse."
 				</Text>
 			</View>
-			<BuyerData navigation={undefined} />
+			<BuyerData />
 		</View>
 	);
 }
