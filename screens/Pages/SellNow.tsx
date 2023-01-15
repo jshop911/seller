@@ -33,13 +33,7 @@ export default function SellNow({ route, navigation }) {
     itemStatus,
   } = route?.params || {};
 
-<<<<<<< HEAD
   let currentUserUID = app.auth().currentUser?.uid;
-=======
-  // console.log(itemName)
-
-  let currentUserUID = app.auth().currentUser.uid;
->>>>>>> 23a104796e236cb7dec663963323a466fb0a1316
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
 
@@ -56,11 +50,11 @@ export default function SellNow({ route, navigation }) {
           Alert.alert("No user data found!");
         } else {
           let dataObj = doc.data();
-          setFirstName(dataObj?.firstName);
-          setLastName(dataObj?.lastName);
+          setFirstName(dataObj.firstName);
+          setLastName(dataObj.lastName);
         }
-      } catch (e) {
-        Alert.alert("There is an error.", e.message);
+      } catch (err) {
+        Alert.alert("There is an error.", err.message);
       }
     }
     getUserInfo();
@@ -97,7 +91,7 @@ export default function SellNow({ route, navigation }) {
       });
       console.log(docRef);
       Alert.alert("Thank you. Please wait for buyer's confirmation.");
-      navigation.navigate("Home")
+      navigation.navigate("Home");
     }
   };
 
@@ -161,10 +155,10 @@ export default function SellNow({ route, navigation }) {
         </View>
 
         {/* Items to be sold */}
-          <View style={tw`mt-3 h-76`}>
-            <View style={tw`bg-gray-200 rounded flex-row`}>
-              <View style={tw`p-2`}>
-                <Image
+        <View style={tw`mt-3 h-76`}>
+          <View style={tw`bg-gray-200 rounded flex-row`}>
+            <View style={tw`p-2`}>
+              <Image
                 source={
                   itemSelectedImage
                     ? { uri: itemSelectedImage }
@@ -172,54 +166,55 @@ export default function SellNow({ route, navigation }) {
                         uri: "https://www.nucleustechnologies.com/blog/wp-content/uploads/2017/01/Cannot-See-Images-in-Outlook-Emails-1200x900.jpg",
                       }
                 }
-                  style={tw`w-25 h-30 p-2 rounded`}
-                />
-              </View>
-              <View style={tw`pt-2 w-54`}>
-                <Text style={tw`text-lg font-bold`}>
-                  {itemName}
-                </Text>
-                <Text style={tw`text-[#223447] font-bold underline`}>
+                style={tw`w-25 h-30 p-2 rounded`}
+              />
+            </View>
+            <View style={tw`pt-2 w-54`}>
+              <Text style={tw`text-lg font-bold`}>{itemName}</Text>
+              <Text style={tw`text-[#223447] font-bold underline`}>
                 {itemUsername}
+              </Text>
+              <View style={tw`flex-row items-center`}>
+                <Text style={tw`text-xs text-gray-600 font-bold`}>
+                  Deal Price:
                 </Text>
-                <View style={tw`flex-row items-center`}>
-                  <Text style={tw`text-xs text-gray-600 font-bold`}>
-                    Deal Price:
-                  </Text>
-                  <Text style={tw`text-base text-red-500 font-bold pl-2`}>
-                    {itemDealPrice} Php / kg
-                  </Text>
-                </View>
-                <View style={tw`flex-row items-center`}>
-                  <Text style={tw`text-xs text-gray-600 font-bold`}>
-                    Maximum kg to sell:
-                  </Text>
-                  <Text style={tw`text-sm text-gray-600 font-bold`}> {minKg} kg</Text>
-                </View>
-                <View style={tw`flex-row items-center`}>
-                  <Text style={tw`text-xs text-gray-600 font-bold`}>
-                    Estimated kg to sell:
-                  </Text>
-                  <TextInput
-                    value={estimatedKg}
-                    onChangeText={setEstimatedKg}
-                    keyboardType="number-pad"
-                    returnKeyType="done"
-                    textContentType="oneTimeCode"
-                    maxLength={4}
-                    placeholder="0"
-                    style={tw`ml-2 px-2 border border-red-500 w-12 h-7 text-right`}
-                  />
-                </View>
+                <Text style={tw`text-base text-red-500 font-bold pl-2`}>
+                  {itemDealPrice} Php / kg
+                </Text>
+              </View>
+              <View style={tw`flex-row items-center`}>
+                <Text style={tw`text-xs text-gray-600 font-bold`}>
+                  Maximum kg to sell:
+                </Text>
+                <Text style={tw`text-sm text-gray-600 font-bold`}>
+                  {" "}
+                  {minKg} kg
+                </Text>
+              </View>
+              <View style={tw`flex-row items-center`}>
+                <Text style={tw`text-xs text-gray-600 font-bold`}>
+                  Estimated kg to sell:
+                </Text>
+                <TextInput
+                  value={estimatedKg}
+                  onChangeText={setEstimatedKg}
+                  keyboardType="number-pad"
+                  returnKeyType="done"
+                  textContentType="oneTimeCode"
+                  maxLength={4}
+                  placeholder="0"
+                  style={tw`ml-2 px-2 border border-red-500 w-12 h-7 text-right`}
+                />
               </View>
             </View>
           </View>
-        {/* Sell now button */}
-      <TouchableOpacity onPress={sellNow}>
-        <View style={tw`m-2 bg-[#faac2a] rounded`}>
-          <Text style={tw`text-center p-3 font-bold`}>Sell now</Text>
         </View>
-      </TouchableOpacity>
+        {/* Sell now button */}
+        <TouchableOpacity onPress={sellNow}>
+          <View style={tw`m-2 bg-[#faac2a] rounded`}>
+            <Text style={tw`text-center p-3 font-bold`}>Sell now</Text>
+          </View>
+        </TouchableOpacity>
       </View>
     </>
   );
