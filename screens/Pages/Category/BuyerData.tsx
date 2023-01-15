@@ -16,6 +16,7 @@ import { db } from "../../../config/firebase/Firebase";
 export default function BuyerData() {
   const [DATA, setData] = useState();
   const navigation = useNavigation();
+  const [loading, setLoading] = useState(true);
 
   // let currentUserUID = app.auth().currentUser.uid;
   useEffect(() => {
@@ -29,15 +30,16 @@ export default function BuyerData() {
         getDataFromFirebase.push({ ...doc.data(), id: doc.id, key: doc.id });
       });
       setData(getDataFromFirebase);
-      // setLoading(false);
+      setLoading(false);
     });
   };
 
   return (
     <View style={tw`flex items-center self-center h-95 mb-120`}>
+      {loading && <Text>Loading...</Text>}
       <FlatList
         data={DATA}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.key}
         numColumns={2}
         renderItem={({ item }) => (
           <View style={tw`flex-row p-2`}>
@@ -57,7 +59,6 @@ export default function BuyerData() {
                     minKg: item.minKg,
                     itemSelectedImage: item.selectedProductImage,
                     listOfCategory: item.listOfCategory,
-                    
                   })
                 }
               >
@@ -93,19 +94,21 @@ export default function BuyerData() {
                 </Text>
               </View>
 
-              <Pressable onPress={() =>
-                navigation.navigate("SellNow", {
-                  itemId: item.id,
-                  itemName: item.productName,
-                  itemDealPrice: item.dealPrice,
-                  itemUsername: item.userName,
-                  itemProductDesc: item.productDesc,
-                  itemAddress: item.address,
-                  minKg: item.minKg,
-                  itemSelectedImage: item.selectedProductImage,
-                  listOfCategory: item.listOfCategory,
-                })
-              }>
+              <Pressable
+                onPress={() =>
+                  navigation.navigate("SellNow", {
+                    itemId: item.id,
+                    itemName: item.productName,
+                    itemDealPrice: item.dealPrice,
+                    itemUsername: item.userName,
+                    itemProductDesc: item.productDesc,
+                    itemAddress: item.address,
+                    minKg: item.minKg,
+                    itemSelectedImage: item.selectedProductImage,
+                    listOfCategory: item.listOfCategory,
+                  })
+                }
+              >
                 <View style={tw`p-2 mt-2 bg-[#faac2a] rounded shadow-md`}>
                   <Text style={tw`text-sm text-center text-gray-900 font-bold`}>
                     Sell Now
