@@ -10,13 +10,12 @@ import Constants from "expo-constants";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-	apiKey: Constants.manifest?.extra?.firebaseApiKey,
-	authDomain: Constants.manifest?.extra?.firebaseAuthDomain,
-	databaseURL: Constants.manifest?.extra?.firebaseDatabaseURL,
-	projectId: Constants.manifest?.extra?.firebaseProjectId,
-	storageBucket: Constants.manifest?.extra?.firebaseStorageBucket,
-	messagingSenderId: Constants.manifest?.extra?.firebaseMessagingSenderId,
-	appId: Constants.manifest?.extra?.firebaseAppId,
+apiKey: "AIzaSyDR4JxWa0z6PnzFYgsUSnQymythbvs1dV4",
+  authDomain: "jshop-seller-buyer.firebaseapp.com",
+  projectId: "jshop-seller-buyer",
+  storageBucket: "jshop-seller-buyer.appspot.com",
+  messagingSenderId: "589369620337",
+  appId: "1:589369620337:web:d7fa84948cc2894b6b68d0"
 };
 
 let app;

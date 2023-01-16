@@ -73,7 +73,6 @@ export default function SellNow({ route, navigation }) {
       alert("Sorry, but the minimum kg to be sold is 5.");
     } else {
       const docRef = await addDoc(collection(db, "placeSell"), {
-        key: doc.app.id,
         productName: itemName,
         buyerName: itemUsername,
         itemId: itemId,
